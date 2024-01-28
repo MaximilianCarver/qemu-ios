@@ -48,3 +48,11 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get -y install make ninja-build pkg-config libssl-dev libsdl2-dev libpixman-1-dev libpixman-1-0 libglib2.0-dev
+          cd qemu-ios
+          ./configure --enable-sdl --disable-cocoa --target-list=arm-softmmu --disable-capstone --disable-slirp --extra-cflags=-I/usr/include/openssl --extra-ldflags='-lcrypto' --disable-werror --enable-pie
+          make
+
+      - name: Ejecutar QEMU
+        run: |
+          cd arm-softmmu
+          ./qemu-system-arm
